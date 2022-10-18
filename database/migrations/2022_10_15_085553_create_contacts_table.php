@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string(column: 'name');
             $table->string(column: 'email');
-            $table->string(column: 'birthday');
+            $table->timestamp(column: 'birthday');
             $table->string(column: 'company');
             $table->timestamps();
         });
