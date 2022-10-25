@@ -10,6 +10,7 @@ use \App\Models\Article;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContactsTest extends TestCase
 {
@@ -49,7 +50,11 @@ class ContactsTest extends TestCase
         $response->assertJsonCount(1)
             ->assertJson([
                 'data' => [
-                    ['contact_id' => $contact->id]
+                    [
+                        'data' => [
+                            'contact_id' => $contact->id
+                        ]
+                    ]
                 ]
             ]);
     }
@@ -60,7 +65,7 @@ class ContactsTest extends TestCase
 
         Sanctum::actingAs($this->user);
 
-        $this->post('/api/contacts', $this->data());
+        $response = $this->post('/api/contacts', $this->data());
 
         $contact = Contact::first();
 
@@ -68,6 +73,15 @@ class ContactsTest extends TestCase
         $this->assertEquals('test@email.com', $contact->email);
         $this->assertEquals('05/14/1988', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('ABC String', $contact->company);
+        $response->assertStatus(Response::HTTP_CREATED);
+        $response->assertJson([
+            'data' => [
+                'contact_id' => $contact->id,
+            ],
+            'links' => [
+                'self' => $contact->path(),
+            ]
+        ]);
     }
 
     /** @test */
@@ -169,6 +183,16 @@ class ContactsTest extends TestCase
         $this->assertEquals('test@email.com', $contact->email);
         $this->assertEquals('05/14/1988', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('ABC String', $contact->company);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson([
+            'data' => [
+                'contact_id' => $contact->id,
+            ],
+            'links' => [
+                'self' => $contact->path(),
+            ]
+        ]);
     }
 
     /** @test */
@@ -196,6 +220,7 @@ class ContactsTest extends TestCase
         );
 
         $this->assertCount(0, Contact::all());
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     /** @test */

@@ -14,7 +14,10 @@ class Contact extends Model
 
     protected $dates = ['birthday'];
 
-    //protected $casts = ['birthday' => 'timestamp'];
+    public function path()
+    {
+        return url('/contacts/' . $this->id);
+    }
 
 
     public function setBirthdayAttribute($birthday)
