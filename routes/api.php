@@ -17,6 +17,7 @@ use App\Http\Controllers\ContactsController;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/contacts', [ContactsController::class, "index"]);
     Route::post('/contacts', [ContactsController::class, "store"]);
     Route::get('/contacts/{contact}', [ContactsController::class, "show"]);
     Route::patch('/contacts/{contact}', [ContactsController::class, "update"]);

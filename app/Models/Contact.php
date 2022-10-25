@@ -21,4 +21,9 @@ class Contact extends Model
     {
         $this->attributes['birthday'] = Carbon::parse($birthday);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
