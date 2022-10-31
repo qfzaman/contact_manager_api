@@ -19,7 +19,7 @@
             <div>
                 <x-input-label for="email" :value="__('Email')" />
 
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" autofocus />
             </div>
 
             <!-- Password -->
@@ -29,7 +29,7 @@
                 <x-text-input id="password" class="block mt-1 w-full"
                                 type="password"
                                 name="password"
-                                required autocomplete="current-password" />
+                                 autocomplete="current-password" />
             </div>
 
             <!-- Remember Me -->
@@ -40,12 +40,15 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex justify-between items-center mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                    <a class="text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
+                <a class="text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
+                        Register
+                    </a>
 
                 <x-primary-button class="ml-3">
                     {{ __('Log in') }}
