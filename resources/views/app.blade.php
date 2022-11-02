@@ -8,7 +8,9 @@
         @vite('resources/css/app.css')
     </head>
     <body class="antialiased">
-        <div id='app'></div>
+        <div id='app' user='@json(auth()->user())'>
+            {{-- <App :user="{{ auth()->user() }}"></App> --}}
+        </div>
         
         @vite('resources/js/app.js')
     </body>

@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer components {
+    .error-field {
+        @apply .border-red-500 .border-b-2;
+    }
+}
